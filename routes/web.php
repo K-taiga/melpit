@@ -16,5 +16,5 @@ Route::prefix('mypage')
     // authの処理を挟む
     ->middleware('auth')
     ->group(function () {
-        Route::get('edit-profile', 'ProfileController@showProfileEditForm')->name('maypage.edit-profile');
+        Route::get('edit-profile', 'ProfileController@showProfileEditForm')->name('mypage.edit-profile');
 });
