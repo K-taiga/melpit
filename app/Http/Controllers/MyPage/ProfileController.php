@@ -43,9 +43,9 @@ class ProfileController extends Controller
      * saveAvatar アバター画像をリサイズして保存する
      *
      * @param  mixed $file
-     * @return string
+     * @return string ファイル名
      */
-    private function saveAvatar(UploadedFile $file) :string
+    private function saveAvatar(UploadedFile $file): string
     {
         // 一時ファイル生成時用のパスを取得
         $tempPath = $this->makeTempPath();
@@ -58,5 +58,20 @@ class ProfileController extends Controller
         $filePath = Storage::disk('public')->putFile('avatars',new File($tempPath));
 
         return basename($filepath);
+    }
+    
+    /**
+     * makeTempPath
+     *
+     * @return sring ファイルパス
+     */
+    private function makeTempPath(): string
+    {
+        // 一時ファイルを/tmpに生成しファイルポインタを返す
+        $tmp_fp = tmpfile();
+        // ファイルのメタ情報を取得
+        $meta = stream_get_meta_data($tmp_fp);
+        // メタ情報からURI(ファイルのパス)を取得
+        return $meta["uri"];
     }
 }
