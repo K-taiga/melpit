@@ -16,6 +16,7 @@ class ProfileController extends Controller
             ->with('user',Auth::user());
     }
 
+    // メソッドインジェクション 引数のクラスを生成し渡してくれる
     public function editProfile(EditRequest $request) {
         $user = Auth::user();
 
