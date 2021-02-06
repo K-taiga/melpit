@@ -10,6 +10,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::middleware('auth')
+    ->group(function() {
+        Route::get('sell','SellController@showSellForm')->name('sell');
+});
+
 Route::prefix('mypage')
     // ディレクトリのnamespace
     ->namespace('MyPage')
