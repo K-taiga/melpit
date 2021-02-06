@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnsToItemConditionsTables extends Migration
+class AddColumnsToSecondaryCategories extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddColumnsToItemConditionsTables extends Migration
      */
     public function up()
     {
-        Schema::table('item_conditions', function (Blueprint $table) {
+        Schema::table('secondary_categories', function (Blueprint $table) {
             $table->string('name');
-            $table->integer('sort_no');
+            $table->string('sort_no');
         });
     }
 
@@ -26,7 +26,7 @@ class AddColumnsToItemConditionsTables extends Migration
      */
     public function down()
     {
-        Schema::table('item_conditions', function (Blueprint $table) {
+        Schema::table('secondary_categories', function (Blueprint $table) {
             $table->dropColumn('name');
             $table->dropColumn('sort_no');
         });
