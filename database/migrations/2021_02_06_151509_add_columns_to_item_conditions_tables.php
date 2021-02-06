@@ -13,7 +13,7 @@ class AddColumnsToItemConditionsTables extends Migration
      */
     public function up()
     {
-        Schema::table('conditions', function (Blueprint $table) {
+        Schema::table('item_conditions', function (Blueprint $table) {
             $table->string('name');
             $table->integer('sort_no');
         });
@@ -26,7 +26,7 @@ class AddColumnsToItemConditionsTables extends Migration
      */
     public function down()
     {
-        Schema::table('conditions', function (Blueprint $table) {
+        Schema::table('item_conditions', function (Blueprint $table) {
             $table->dropColumn('name');
             $table->dropColumn('integer');
         });
