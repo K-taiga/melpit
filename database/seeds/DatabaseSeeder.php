@@ -12,5 +12,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UserSeeder::class);
         $this->call(ItemConditionSeeder::class);
+        $this->call(PrimaryCategory::class);
+        $this->call(SecodnaryCategory::class);
     }
 }
