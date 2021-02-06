@@ -4,15 +4,13 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SellRequest extends FormRequest
-{
+class SellRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
-    {
+    public function authorize() {
         return true;
     }
 
@@ -21,9 +19,9 @@ class SellRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
+    public function rules() {
         return [
+            'item-image'  => ['required', 'file', 'image'],
             'name'        => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:2000'],
             'category'    => ['required', 'integer'],
@@ -33,9 +31,9 @@ class SellRequest extends FormRequest
     }
 
     // ルールメソッドで指定したバリデーションで，エラーが返ってきたときにのメッセージの項目名を変更する
-    public function attibutes()
-    {
-        return[
+    public function attibutes() {
+        return [
+            'item-image'  => '商品画像',
             'name'        => '商品名',
             'description' => '商品の説明',
             'category'    => 'カテゴリ',
