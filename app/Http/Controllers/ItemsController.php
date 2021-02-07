@@ -28,6 +28,16 @@ class ItemsController extends Controller
           }
         }
 
+        // キーワードで絞り込み
+        if($request->filled('keyword')) {
+          // escapeで%や_をなくしてから%にくっつけてLIKE検索
+          $keyword = '%' . $this->escape($request->input('keyword')) . '%';
+          $query->where(function($query)use($keyword) {
+            $query->where('name','LIKE',$keyword);
+            $query->orWhere('description','LIKE',$keyword);
+          });
+        }
+
         // ORDER BY句のSQLを直接記述　
         // state,'selling','bought'  第一引数の次に第二引数で並べ替え
         $items = $query->orderByRaw( "FIELD(state, '" . Item::STATE_SELLING . "', '" . Item::STATE_BOUGHT . "')" )
@@ -36,6 +46,15 @@ class ItemsController extends Controller
 
         return view('items.items')
           ->with('items',$items);
+    }
+
+    public function escape(string $value)
+    {
+        return str_replace(
+          ['\\', '%', '_'],
+          ['\\\\', '\\%', '\\_'],
+          $value
+        );
     }
 
     // ルートパラメータのitems/1からそのままModelからIDでデータ取得しそれをコントローラーに渡す
