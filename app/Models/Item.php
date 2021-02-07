@@ -16,6 +16,16 @@ class Item extends Model
         return $this->belongsTo(SecondaryCategory::class);
     }
 
+    public function seller()
+    {
+        return $this->belongsTo(User::class,'seller_id');
+    }
+
+    public function condition()
+    {
+        return $this->belongsTo(ItemCondition::class,'item_condition_id');
+    }
+
     // get***AttributeでDBから取得した値を加工した結果を***で参照できる
     // Booleanを返す
     public function getIsStateSellingAttribute()

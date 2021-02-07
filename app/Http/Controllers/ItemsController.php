@@ -18,4 +18,12 @@ class ItemsController extends Controller
         return view('items.items')
           ->with('items',$items);
     }
+
+    // ルートパラメータのitems/1からそのままModelからIDでデータ取得しそれをコントローラーに渡す
+    // Route->Model->Controllerというながれ、ルートモデルバインディング
+    public function showItemDetail(Item $item)
+    {
+      return view('items.item_detail')
+        ->with('item',$item);
+    }
 }
