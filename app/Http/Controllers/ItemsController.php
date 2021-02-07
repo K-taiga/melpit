@@ -9,9 +9,28 @@ class ItemsController extends Controller
 {
     public function showItems(Request $request)
     {
+        $query = Item::query();
+
+        // カテゴリで絞り込み
+        // requestインスタンスのfilledメソッドでパラメータが指定されているかを調べることができる
+        if($request->filled('category')){
+          // 区切り文字の':'でexplodeし[categoryType=>7]のような連想配列を作成
+          list($categoryType,$categoryID) = explode(':',$request->input('category'));
+
+          if($categoryType === 'primary'){
+            // Itemはsecondary_categoriesとしか紐付いていないため、whereHasを用いてそのリレーション先であるprimary_categoriesをとる
+            // whereHasの第一引数でItemのリレーション定義のメソッド、第二引数で無名関数を定義しその先のテーブルに対する絞り込みを記述する
+            $query->whereHas('secondaryCategory',function($query) use ($categoryID) {
+              $query->where('primary_category_id',$categoryID);
+            });
+          } else if ($categoryID === 'secondary') {
+            $query->where('secondary_category_id',$categoryID);
+          }
+        }
+
         // ORDER BY句のSQLを直接記述　
         // state,'selling','bought'  第一引数の次に第二引数で並べ替え
-        $items = Item::orderByRaw("FIELD(state,'" .Item::STATE_SELLING. "', '".Item::STATE_BOUGHT . "')" )
+        $items = $query->orderByRaw( "FIELD(state, '" . Item::STATE_SELLING . "', '" . Item::STATE_BOUGHT . "')" )
           ->orderBy('id','DESC')
           ->paginate(52);
 
