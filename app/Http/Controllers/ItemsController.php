@@ -64,4 +64,15 @@ class ItemsController extends Controller
       return view('items.item_detail')
         ->with('item',$item);
     }
+
+    // ルートモデルバインディング
+    public function showBuyItemForm(Item $item)
+    {
+      if(!$item->isStateSelling) {
+        abort(404);
+      }
+
+      return view('items.item_buy_form')
+        ->with('item',$item);
+    }
 }
