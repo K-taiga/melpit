@@ -11,6 +11,12 @@ class Item extends Model
     // 購入済み
     const STATE_BOUGHT  = 'bought';
 
+    // $castsフィールドで取り出したDBの型を変更できる
+    // bought_atをtimestampからdatetaime(Carbonクラス)に変換
+    protected $casts = [
+        'bought_at' => 'datetime',
+    ];
+
     public function secondaryCategory()
     {
         return $this->belongsTo(SecondaryCategory::class);
